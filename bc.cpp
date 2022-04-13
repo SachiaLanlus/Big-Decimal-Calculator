@@ -86,12 +86,9 @@ void tst()
     while(true)
     {
         lt=llrand();
-        //cout<<lt<<endl;
         sprintf(buffer,"%llu",lt);
         ps=string(buffer);
-        //cout<<ps<<endl;
         bf=ps;
-        //cout<<bf<<endl;
         ps=expo(ps,"2");
         ps=sqrt(ps);
         if(ps!=bf||globalErrorFlag)
@@ -108,35 +105,6 @@ void tst()
 
 int main()
 {
-    /*cout<<DBL_MAX<<endl;
-    return 0;*/
-    //cout<<expo("1.00000001","10")<<endl;
-    /*string a,b;
-    while(cin>>a>>b)
-        cout<<nthRoot(a,b);
-    //tst();
-
-
-    /*string g="1";
-    for(int i=1;i<63;i++)
-    {
-        g=mul(g,"2");
-        g=add(g,"1");
-    }
-    cout<<g<<endl;
-    //system("pause");
-    long double bb;
-    stringstream sss;
-    sss<<g;
-    sss>>bb;
-    printf("%.50lf\n",sqrt(bb));
-    //cout<<LDBL_DIG<<endl;
-    system("pause");*/
-    /*string s;
-    while(cin>>s)
-    {
-        cout<<sqrt(s)<<endl;
-    }*/
     if(!dbg)
     {
         cout<<"This program can implement big decimal compute over all float point or integer,\n";
@@ -215,7 +183,6 @@ int main()
             GetConsoleScreenBufferInfo(hConsole, &coninfo);
             coninfo.dwCursorPosition.Y -= 1;    // move up one line
             SetConsoleCursorPosition(hConsole, coninfo.dwCursorPosition);*/
-            //////
             str=(r+arithType+v2);
             cout<<str<<endl;
         }
@@ -223,7 +190,6 @@ int main()
         {
             if(str[buf]=='+'||str[buf]=='-'||str[buf]=='*'||str[buf]=='/'||str[buf]=='^'||str[buf]=='!'||str[buf]=='@'||str[buf]=='%'||str[buf]=='#')break;
         }
-        //cout<<"buf="<<buf<<endl;
         if(buf>=str.length())
         {
             for(buf=0;buf<str.length();buf++)
@@ -232,9 +198,7 @@ int main()
             }
             if(buf==str.length())
             {
-                //cout<<"Operator needed"<<endl;
-
-                //r=add("0",str);
+                //Operator needed
                 r=cut(str);
                 if(r=="-0") r="0";
 
@@ -275,16 +239,10 @@ int main()
             }
         }
         if((buf==str.length()-1)) str.append(r);//deal with like 1/
-        //cout<<"str="<<str<<endl;
         str.insert(buf,1,' ');
         str.insert(buf+2,1,' ');
-        //cout<<"str="<<str<<endl;
         ss.str(str);
-        //cout<<"ss.str()="<<ss.str()<<endl;
         ss>>v1>>arithType>>v2;
-        /*cout<<"v1="<<v1<<endl;
-        cout<<"v2="<<v2<<endl;
-        cout<<"ari="<<arithType<<endl;*/
         if(v1[0]=='-')
         {
             isV1Signed=true;
@@ -381,7 +339,6 @@ int main()
         }
         //if(expShorten) r=shortExp(r);
         if(r=="-0") r="0";
-        //cout<<"tmpr:"<<r<<endl;
         r=cut(r);
         cout<<r;
         if(rounded)cout<<" (Rounded)";
@@ -403,10 +360,8 @@ bool fullStringGreaterOrEqul(string s1,string s2)
     int buf=0,j;
     for(j=s1.length()-1;j>=0;j--) if(s1[j]=='.')break;
     if(j!=-1)buf=s1.length()-j-1;
-    //cout<<"buf="<<buf<<endl;
     for(j=s2.length()-1;j>=0;j--) if(s2[j]=='.')break;
     if(j!=-1)buf-=(s2.length()-j-1);
-    //cout<<"buf="<<buf<<endl;
     if(buf>0) s2.append(buf,'0');
     else if(buf<0) s1.append(-buf,'0');
 
@@ -426,12 +381,6 @@ bool fullStringGreaterOrEqul(string s1,string s2)
             break;
         }
     }
-
-    /*cout<<"!!!!grt!"<<endl;
-    cout<<"s1="<<s1<<endl;
-    cout<<"s2="<<s2<<endl;
-    cout<<"-----"<<endl;*/
-
     if(s1.length()>s2.length()) return true;
     else if(s2.length()>s1.length()) return false;
     else
@@ -477,16 +426,11 @@ string add(string s1,string s2)
     }
 
     string rf(max(f1.length(),f2.length()),'0');
-    //cout<<"------------"<<endl;
-    //cout<<s1<<endl;
     stringReverse(s1);
-    //cout<<s1<<endl;
-    //cout<<s2<<endl;
     stringReverse(s2);
-    //cout<<s2<<endl;
     string r(max(s1.length(),s2.length())+1,'0');
 
-    //integer
+    //int
     for(i=0;i<s1.length()&&i<s2.length();i++)
         r[i]=s1[i]+s2[i]-'0';
     for(;i<s1.length();i++)
@@ -494,7 +438,7 @@ string add(string s1,string s2)
     for(;i<s2.length();i++)
         r[i]=s2[i];
 
-    //float point
+    //fp
     if(isFs1&&isFs2)
     {
         for(i=0;i<f1.length()&&i<f2.length();i++)
@@ -527,7 +471,6 @@ string add(string s1,string s2)
         else break;
     }
     if(rf.length()==0)isFs1=isFs2=false;
-    //cout<<r<<endl;
     for(i=0;i<r.length();i++)
     {
         if(r[i]>'9')
@@ -537,7 +480,6 @@ string add(string s1,string s2)
         }
     }
 
-    //cout<<r<<endl;
     stringReverse(r);
     if(r[0]=='0')r=r.substr(1,r.length()-1);
     if(r.length()==0)r="0";
@@ -583,14 +525,13 @@ string sub(string s1,string s2)
     stringReverse(s2);
     string r(max(s1.length(),s2.length()),'0');
 
-    //integer
+    //int
     for(i=0;i<s2.length();i++)
         r[i]=s1[i]-s2[i]+'0';
     for(;i<s1.length();i++)
         r[i]=s1[i];
 
-    //cout<<"r="<<r<<endl;
-    //float point
+    //fp
     if(isFs1&&isFs2)
     {
         for(i=0;i<f1.length()&&i<f2.length();i++)
@@ -612,7 +553,6 @@ string sub(string s1,string s2)
             rf[0]+=10;
             r[0]--;
         }
-        //cout<<"rf="<<rf<<endl;
     }
     else if(isFs1)rf=f1;
     else if(isFs2)
@@ -643,15 +583,11 @@ string sub(string s1,string s2)
     }
     else rf="";
 
-    //cout<<"r="<<r<<endl;
-
     for(int j=rf.length()-1;j>=0;j--)
     {
         if(rf[j]=='0')rf=rf.substr(0,j);
         else break;
     }
-
-    //cout<<"r="<<r<<endl;
 
     if(rf.length()==0)isFs1=isFs2=false;
     for(i=0;i<r.length();i++)
@@ -663,9 +599,6 @@ string sub(string s1,string s2)
         }
     }
 
-    //cout<<"r="<<r<<endl;
-
-    //cout<<"!!!"<<rf[0]-'0'<<endl;
     stringReverse(r);
     if(isFs1||isFs2)r=r+"."+rf;
     //if(expShorten) r=shortExp(r);
@@ -717,24 +650,6 @@ string mul(string s1,string s2)
         }
     }
 
-    /*for(int i=0;i<r.length();i++)
-    {
-        if(r[i]>9)
-        {
-            r[i+1]+=r[i]/10;
-            r[i]%=10;
-        }
-    }*/
-
-    /*for(int i=0;i<r.length();i++)
-    {
-        printf("%d ",r[i]);
-    }
-    cout<<endl;*/
-    /*for(int i=0;i<s1.length();i++)s1[i]+='0';
-    cout<<"r="<<r<<endl;
-    for(int i=0;i<s1.length();i++)s1[i]-='0';*/
-
     r.insert(f1Idx+f2Idx,1,'.'-'0');
     stringReverse(r);
 
@@ -758,12 +673,6 @@ string mul(string s1,string s2)
 
     for(int i=0;i<r.length();i++)r[i]+='0';
     if(r[0]=='.')r.insert(0,1,'0');
-    //cout<<"r="<<r<<endl;
-
-    //stringReverse(r);
-    //if(expShorten) r=shortExp(r);
-    //r=cut(r);
-    //cout<<"before return:"<<r<<endl;
     return r;
 }
 
@@ -804,26 +713,6 @@ string div(string s1,string s2)
         fIdx+=s2.length()-pos-1;
         s2.erase(pos,1);
     }
-    //cout<<"b";
-    /*
-    for(int i=0;i<s1.length();i++)
-    {
-        if(s1[i]=='.')
-        {
-            fIdx-=s1.length()-i-1;
-            s1.erase(i,1);
-            break;
-        }
-    }
-    for(int i=0;i<s2.length();i++)
-    {
-        if(s2[i]=='.')
-        {
-            fIdx+=s2.length()-i-1;
-            s2.erase(i,1);
-            break;
-        }
-    }*/
     int bufIdxForZero;
     for(bufIdxForZero=0;bufIdxForZero<s2.length();bufIdxForZero++)
     {
@@ -832,13 +721,7 @@ string div(string s1,string s2)
     if(bufIdxForZero!=0)
     {
         s2.erase(0,bufIdxForZero);
-        //s1.append(bufIdxForZero,'0');
     }
-    //cout<<"c";
-    /*cout<<"s1="<<s1<<"!"<<endl;
-    cout<<"s2="<<s2<<"!"<<endl;
-    system("pause");*/
-
     string r,bs,bs2;
     bs2=s2;
     bs=s1;
@@ -853,7 +736,6 @@ string div(string s1,string s2)
         if(isZero(bs))break;
         if(i>(s1.length()+s2.length()+fpml))
         {
-            //cout<<"!"<<endl;
             rounded=true;
             break;
         }
@@ -867,37 +749,18 @@ string div(string s1,string s2)
             {
                 bs.append(lenTest,'0');
             }
-            /*cout<<"now  bs="<<bs<<endl;
-            cout<<"now bs2="<<bs2<<endl;
-            cout<<"buf="<<buf<<endl;*/
             buf++;
-            //cout<<"(";
             bs=sub(bs.substr(0,bs2.length()),bs2)+bs.substr(bs2.length(),bs.length()-bs2.length());
-            //cout<<")";
-            /*cout<<"!now  bs="<<bs<<endl;
-            cout<<"!now bs2="<<bs2<<endl;
-            cout<<"!buf="<<buf<<endl;*/
         }
-        //cout<<"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"<<endl;
         if(isGreater)bs+="0";
         bs2.insert(0,1,'0');
         r+="0";
         r[r.length()-1]+=buf;
-        //cout<<"!!!!!now r=!!!!!"<<r<<endl;
     }
-    //cout<<"d";
     buf=s1.length()-s2.length()+fIdx+1;
-    /*buf-=s2.length();
-    buf+=fIdx;
-    buf++;*/
-    //cout<<"??"<<buf<<endl;
     if(buf<0)
     {
         r.insert(0,(1-buf),'0');
-        /*for(i=buf;i<=0;i++)
-        {
-            r.insert(0,1,'0');
-        }*/
         r.insert(1,1,'.');
     }
     else
@@ -914,26 +777,15 @@ string div(string s1,string s2)
         r.erase(0,i);
     }
     if(r[0]=='.')r.insert(0,1,'0');
-    //cout<<"i="<<i<<endl;
-    //cout<<"fIdx="<<fIdx<<endl;
-    /////////////////////////////////////////////////
-    //if(expShorten) r=shortExp(r);
-    ////////////////////////////////////////////
-    //r=cut(r);
-    //cout<<"e"<<endl;
     return r;
 }
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!expo with dec is not completed(error too high)
+//TODO: expo with dec is not completed(error too high)
 string expo(string s,string n)
 {
     vector<string> v;
     bool isDec=false;
     int dotIdx=n.find('.');
     string nf;
-    /*for(int i=0;i<n.length();i++)
-    {
-        if(n[i]=='.')return "0";
-    }*/
     if(dotIdx!=string::npos)
     {
         isDec=true;
@@ -941,11 +793,9 @@ string expo(string s,string n)
         nf.insert(0,1,'0');
         n=n.substr(0,dotIdx);
     }
-    //cout<<"nf="<<nf<<endl;
 
     int e=0;
     bool isSigned=false;
-    //stringReverse(n);
     if(n[0]=='-') isSigned=true;
     else e=n[0]-'0';
     for(int i=1;i<n.length();i++)
@@ -955,8 +805,6 @@ string expo(string s,string n)
     }
 
     string r,rf="1";
-    //cout<<"s="<<s<<endl;
-    //cout<<"e="<<e<<endl;
     int temp;
     int maxE;
     if(e==0) r="1";
@@ -973,7 +821,6 @@ string expo(string s,string n)
             maxE*=2;
         }
         i*=i;
-        //r=mul(s,r);
     }
     temp=maxE;
     r="1";
@@ -982,23 +829,15 @@ string expo(string s,string n)
         temp=maxE;
         if(temp<=e)
         {
-            /*cout<<"t:"<<temp<<" e:"<<e<<endl;
-            for(int k=0;k<v.size();k++)
-            {
-                cout<<v[k]<<" ";
-            }
-            cout<<endl;*/
             e-=temp;
             r=mul(r,v[i]);
             i++;
-            //cout<<"r="<<r<<" i="<<i<<endl;
             continue;
         }
         else maxE/=2;
     }
     if(isDec)
     {
-        //cout<<"?";
         string bufStr=nf;
         string acString="1";
         string bufAcString=s;
@@ -1016,10 +855,7 @@ string expo(string s,string n)
             {
                 bufStr=sub(bufStr,acString);
                 rf=mul(rf,bufAcString);
-                //rf=cutForSqrt(rf);
                 rf=cut(rf);
-                //cout<<"rf now="<<rf<<"-"<<endl;
-                //cout<<"rf="<<rf<<endl;
                 incCount++;
             }
             else
@@ -1028,29 +864,9 @@ string expo(string s,string n)
                 buf=bufAcString;
                 bufAcString=sqrtForExpo(bufAcString);
                 if(buf==bufAcString) break;
-                //if(bufAcString=="1") break;
-                /*for(int i=2;i<bufAcString.length();i++)
-                {
-                    if(bufAcString[i]!='0')
-                    {
-                        len=bufAcString.length()-i;
-                        break;
-                    }
-                }
-                len+=sqrt(fpml)>bufAcString.length()?sqrt(fpml):bufAcString.length();*/
-                //cout<<"len="<<len<<endl;
-                //cout<<"@"<<acString<<endl;
-                //cout<<"|"<<bufAcString<<endl;
-                //bufAcString=cutForSqrt(bufAcString);
                 bufAcString=bufAcString.substr(0,len>bufAcString.length()?bufAcString.length():len);
-                //cout<<":"<<bufAcString<<endl;
             }
         }
-        //cout<<"~rf="<<rf<<endl;
-        //rf=rf.substr(0,finalLen);
-        //cout<<"lest="<<bufStr<<endl;
-        //cout<<"r="<<r<<endl;
-        //cout<<"rf="<<rf<<endl;
     }
 
     if(!isSigned)
@@ -1099,8 +915,6 @@ string shortExp(string r)
         string bufExpStrRev="";
         while(temp>0)
         {
-            //bufExp.insert(bufExp.length()-1,1,'0'+temp%10);
-            //bufExp.append(1,'0'+temp%10);
             bufExpStrRev.append(1,'0'+temp%10);
             temp/=10;
         }
@@ -1113,13 +927,6 @@ string shortExp(string r)
         else return r;
     }
 
-    /*for(k=r.length()-1;k>=0;k--)
-    {
-        if(r[k]!='0')break;
-    }
-    if(k!=r.length()-1) r.erase(k+1,r.length()-k);*/
-
-    // 0.xxx
     if(r[0]=='0'&&r[1]=='.')
     {
         for(j=2;j<r.length();j++)
@@ -1228,7 +1035,6 @@ string cut(string s)
 
 string fac(string s)
 {
-    //cout<<"s="<<s<<endl;
     for(int i=0;i<s.length();i++)
     {
         if(s[i]=='.')return "0";
@@ -1238,7 +1044,6 @@ string fac(string s)
     {
         r=mul(r,s);
         s=sub(s,"1");
-        //s=cut(s);
     }
     return r;
 }
@@ -1255,35 +1060,16 @@ bool isZero(string s)
 string sqrt(string m)
 {
     m=cut(m);
-    //if(fullStringGreaterOrEqul("0",m)) return "0";
     if(m=="0") return "0";
-    /*int temp=fpml;
-    fpml=10;*/
-    //string i="0";
     string x1,x2;
-    /*while(fullStringGreaterOrEqul(m,mul(i,i)))
-    {
-        i=add(i,fullStringGreaterOrEqul(mul(m,"0.01"),"0.01")?mul(m,"0.01"):"0.01");
-        //cout<<"!";
-    }*/
     x1=getSqrtApproximation(m);
     if(sqrtDbg)cout<<"x1="<<x1<<endl;
-    //string temp="2";
     int k;
-    /*for(k=2;true;k++)
-    {
-        temp=mul(temp,"2");
-        if(fullStringGreaterOrEqul(temp,m))break;
-    }*/
     k=m.length()*3;
     k=sqrt(k);
-    //k/=2;
-    //k+=10;
     if(k<10)k=10;
     if(sqrtDbg)cout<<"k="<<k<<endl;
-    //system("pause");
     int p=0;
-    //x1="1000000000000000000000000000000000000000000000000000";
     string tmpCutStr;
     for(p=0;p<k;p++)
     {
@@ -1301,19 +1087,14 @@ string sqrt(string m)
             break;
         }
         if(x1==x2)break;
-        //if(sqrtDbg)cout<<"x1="<<x1<<endl;
         x1=x2;
         if(sqrtDbg)cout<<"x2="<<x2<<" p="<<p<<endl;
-
-        //if(x2.length()>fpml)break;
     }
     if(expo(x2,"2")==m)return x2;
     globalErrorFlag=true;
     string appR=x2;
-    //bool hasApp=false;
     if(enableComputingBreaker)
     {
-        //hasApp=true;
         cout<<"Approximation: "<<x2<<endl;
         cout<<"Computing(press esc to break)";
     }
@@ -1343,11 +1124,8 @@ string sqrt(string m)
             break;
         }
         if(sqrtDbg)cout<<"?"<<x2<<endl;
-        //if(x2.length()>fpml)break;
     }
     if(x2.length()>fpml)rounded=true;
-    //else rounded=false;
-    //fpml=temp;
     if(enableComputingBreaker)
     {
         if(stillComputing)
@@ -1368,9 +1146,6 @@ to prevent error positive judge.
 string divForSqrt(string s1,string s2,int fm)
 {
     if(isZero(s2))return "0";
-    /*cout<<"s1="<<s1<<"!"<<endl;
-    cout<<"s2="<<s2<<"!"<<endl;
-    system("pause");*/
     int fIdx=0,buf=0;
     for(int i=0;i<s1.length();i++)
     {
@@ -1398,17 +1173,11 @@ string divForSqrt(string s1,string s2,int fm)
     if(bufIdxForZero!=0)
     {
         s2.erase(0,bufIdxForZero);
-        //s1.append(bufIdxForZero,'0');
     }
-    /*cout<<"s1="<<s1<<"!"<<endl;
-    cout<<"s2="<<s2<<"!"<<endl;
-    system("pause");*/
-
     string r,bs,bs2;
     bs2=s2;
     bs=s1;
     bs.append(s2.length()*2,'0');
-    //for(int i=0;i<buf.length();i++)buf[i]-='0';
     buf=0;
     int i,lenTest;
     bool isGreater;
@@ -1418,8 +1187,6 @@ string divForSqrt(string s1,string s2,int fm)
         if(isZero(bs))break;
         if(i>((s1.length()+s2.length())>fm*2?fm*2:(s1.length()+s2.length())))
         {
-            //cout<<"!"<<endl;
-            //rounded=true;
             break;
         }
         buf=0;
@@ -1431,28 +1198,19 @@ string divForSqrt(string s1,string s2,int fm)
             {
                 bs.append(-lenTest,'0');
             }
-            /*cout<<"now  bs="<<bs<<endl;
-            cout<<"now bs2="<<bs2<<endl;
-            cout<<"buf="<<buf<<endl;*/
             buf++;
             bs=sub(bs.substr(0,bs2.length()),bs2)+bs.substr(bs2.length(),bs.length()-bs2.length());
-            /*cout<<"!now  bs="<<bs<<endl;
-            cout<<"!now bs2="<<bs2<<endl;
-            cout<<"!buf="<<buf<<endl;*/
             isGreater=true;
         }
-        //cout<<"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"<<endl;
         if(isGreater)bs+="0";
         bs2.insert(0,1,'0');
         r+="0";
         r[r.length()-1]+=buf;
-        //cout<<"!!!!!now r=!!!!!"<<r<<endl;
     }
     buf=s1.length();
     buf-=s2.length();
     buf+=fIdx;
     buf++;
-    //cout<<"??"<<buf<<endl;
     if(buf<0)
     {
         for(i=buf;i<=0;i++)
@@ -1475,12 +1233,6 @@ string divForSqrt(string s1,string s2,int fm)
         r.erase(0,i);
     }
     if(r[0]=='.')r.insert(0,1,'0');
-    //cout<<"i="<<i<<endl;
-    //cout<<"fIdx="<<fIdx<<endl;
-    /////////////////////////////////////////////////
-    //if(expShorten) r=shortExp(r);
-    ////////////////////////////////////////////
-    //r=cut(r);
     return r;
 }
 
@@ -1504,10 +1256,8 @@ double stringToDouble(string s)
 string mod(string s1,string s2)
 {
     string tmp=div(s1,s2);
-    //cout<<"tmp="<<tmp<<endl;
     rounded=false;
     tmp=tmp.substr(0,tmp.find('.'));
-    //cout<<"tmp!!="<<tmp<<endl;
     return cut(sub(s1,mul(tmp,s2)));
 }
 
@@ -1515,45 +1265,14 @@ string cutForSqrt(string s)
 {
     int counter=0;
     int dotPos=s.find('.');
-    /*if(true)
-    {
-        s=s.substr(0,dotPos-1);
-        dotPos=s.find('.');
-    }*/
     if(dotPos!=string::npos)
     {
-        /*if(s.length()-dotPos>100)
-        {
-            s=s.substr(0,dotPos+100);
-            dotPos=s.find('.');
-        }*/
-        /*for(int i=s.length()-1;i>=dotPos;i--)
-        {
-            if(s[i]=='9')counter++;
-            else
-            {
-                if(counter>=20)
-                {
-                    cout<<"*";
-                    if(s[i]!='.')
-                    {
-                        s[i]++;
-                        s=s.substr(0,i-1);
-                        return s;
-                    }
-                    else return s.substr(0,i-2);
-                }
-                else counter=0;
-            }
-        }
-        counter=0;*/
         for(int i=s.length()-1;i>dotPos;i--)
         {
             if(s[i]=='9')counter++;
             else counter=0;
             if(counter>=6)
             {
-                //cout<<"~";
                 s=s.substr(0,i);
                 if(s[s.length()-1]=='.')
                 {
@@ -1585,7 +1304,6 @@ string cutForSqrt(string s)
             else counter=0;
             if(counter>=6)
             {
-                //cout<<"~";
                 s=s.substr(0,i);
                 if(s[s.length()-1]=='.')
                 {
@@ -1595,16 +1313,6 @@ string cutForSqrt(string s)
             }
         }
     }
-    /*bool stillNine=true;
-    for(int i=s.length()-1;i>=0;i--)
-    {
-        if(s[i]!='9')
-        {
-            stillNine=false;
-            break;
-        }
-    }
-    if(stillNine)return s.substr(0,dotPos-1);*/
     return s;
 }
 
@@ -1675,16 +1383,6 @@ string getSqrtApproximation(string m)
             return expo("10",intToStr(dotPos/2));
         }
     }
-
-    /*string i="0";
-    while(fullStringGreaterOrEqul(m,mul(i,i)))
-    {
-        i=add(i,mul("0.01",m));
-    }
-    string d=sub(m,mul(i,i));
-    string p=div(d,mul("2",i));
-    string a=add(i,p);
-    return sub(a,div(mul(p,p),mul("2",a)));*/
 }
 
 
@@ -1708,27 +1406,12 @@ void toClipboard(const std::string &s)
 string sqrtForExpo(string m)
 {
     m=cut(m);
-    //if(fullStringGreaterOrEqul("0",m)) return "0";
     if(m=="0") return "0";
-    /*int temp=fpml;
-    fpml=10;*/
-    //string i="0";
     string x1,x2;
-    /*while(fullStringGreaterOrEqul(m,mul(i,i)))
-    {
-        i=add(i,fullStringGreaterOrEqul(mul(m,"0.01"),"0.01")?mul(m,"0.01"):"0.01");
-        //cout<<"!";
-    }*/
     x1=getSqrtApproximation(m);
     if(sqrtDbg)cout<<"m="<<m<<endl;
     if(sqrtDbg)cout<<"x1="<<x1<<endl;
-    //string temp="2";
     int k,h=0;
-    /*for(k=2;true;k++)
-    {
-        temp=mul(temp,"2");
-        if(fullStringGreaterOrEqul(temp,m))break;
-    }*/
     for(int i=2;i<m.length();i++)
     {
         if(m[i]!='0')
@@ -1742,15 +1425,10 @@ string sqrtForExpo(string m)
 
     k=m.length()*3;
     k=sqrt(k);
-    //k=m.length();//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //k/=2;
-    //k+=10;
     if(k<10)k=10;
     if(sqrtDbg)cout<<"k="<<k<<endl;
     if(sqrtDbg)cout<<"h="<<h<<endl;
-    //system("pause");
     int p=0;
-    //x1="1000000000000000000000000000000000000000000000000000";
     string tmpCutStr;
     for(p=0;p<k;p++)
     {
@@ -1768,11 +1446,8 @@ string sqrtForExpo(string m)
             break;
         }
         if(x1==x2)break;
-        //if(sqrtDbg)cout<<"x1="<<x1<<endl;
         x1=x2;
         if(sqrtDbg)cout<<"x2="<<x2<<" p="<<p<<endl;
-
-        //if(x2.length()>fpml)break;
     }
     return x2;
 }
@@ -1784,10 +1459,7 @@ string nthRoot(string s,string e)
     int len=(s.length()+sqrt(fpml));
     int exp=getExp(s);
     int finalLen;
-    //cout<<exp<<endl;
     exp/=stringToDouble(e);
-    //exp+=1;
-    //cout<<exp<<'!'<<endl;
     if(exp>0)
     {
         r.append(exp,'0');
@@ -1814,34 +1486,19 @@ string nthRoot(string s,string e)
         cout<<"r="<<r<<endl;
     }
 
-    //r1=r;
     for(int i=0;i<fpml*sqrt(stringToDouble(e));i++)
     {
-        //r=div(add(mul(sub(e,"1"),r),div(s,expo(r,sub(e,"1")))),e);
-        //cout<<"a";
         r1=sub(e,"1");
         r1=cut(r1);
         if(sqrtDbg) cout<<"r1="<<r1<<endl;
-        //cout<<"b";
         r2=mul(r1,r);
         if(sqrtDbg) cout<<"r2="<<r2<<endl;
-        //cout<<"c";
-        //r3=r1;
-        //cout<<"d";
         if(sqrtDbg) cout<<"!!!!!"<<r<<":::"<<r1<<endl;
         r4=expo(r,r1);
         if(sqrtDbg) cout<<"r4="<<r4<<endl;
-        //r4=r4.substr(0,len<r4.length()?len:r4.length());
-        //r4=r4.substr(0,finalLen<r4.length()?finalLen:r4.length());
-        //cout<<"e";
         r5=div(s,r4);
-        //r5=divForSqrt(s,r4,s.length()>sqrt(fpml)?s.length():sqrt(fpml));
-        //cout<<"f";
         r6=add(r2,r5);
-        //cout<<"g";
         r=div(r6,e);
-        //cout<<"h"<<endl;
-        //r=r7;
         if(sqrtDbg) cout<<"r="<<r<<" : ";
         r=r.substr(0,len<r.length()?len:r.length());
         r=cut(r);
@@ -1851,7 +1508,6 @@ string nthRoot(string s,string e)
     }
     if(enableComputingBreaker)
     {
-        //hasApp=true;
         cout<<"Approximation: "<<r<<endl;
         cout<<"Computing(press esc to break)";
     }
@@ -1870,7 +1526,6 @@ string nthRoot(string s,string e)
         {
             r=div(add(mul(sub(e,"1"),r),div(s,expo(r,sub(e,"1")))),e);
             r=cut(r);
-            //cout<<r<<endl;
             if(r.length()>s.length()+fpml*sqrt(s.length()))
             {
                 if(enableComputingBreaker&&!stillComputing)
@@ -1882,7 +1537,6 @@ string nthRoot(string s,string e)
         }
     }
     else rounded=false;
-    //cout<<"!"<<endl;
     r=cut(r);
     if(enableComputingBreaker)
     {
@@ -1895,17 +1549,14 @@ string nthRoot(string s,string e)
         cout<<endl;
     }
     return r;
-    //return r.substr(0,len<r.length()?len:r.length());
 }
 
 int getExp(string s)
 {
-    //if(s[0]=='-') return 0;
     int pos=s.find('.');
     if(pos==string::npos)
     {
         if(isZero(s)) return 0;
-        //cout<<"%1";
         return s.length()-1;
     }
     else
@@ -1916,7 +1567,6 @@ int getExp(string s)
         }
         for(int i=pos+1;i<s.length();i++)
         {
-            //cout<<"%2";
             if(s[i]!='0') return pos-i;
         }
         return 0;
@@ -1934,11 +1584,8 @@ string expoForRoot(string s,string n,int len)
     }
 
     string r;
-    //cout<<"s="<<s<<endl;
-    //cout<<"e="<<e<<endl;
     int temp;
     int maxE;
-    //if(e==0) r="1";
     maxE=1;
 
     r=s;
@@ -1952,7 +1599,6 @@ string expoForRoot(string s,string n,int len)
             maxE*=2;
         }
         i*=i;
-        //r=mul(s,r);
     }
     temp=maxE;
     r="1";
@@ -1961,16 +1607,9 @@ string expoForRoot(string s,string n,int len)
         temp=maxE;
         if(temp<=e)
         {
-            /*cout<<"t:"<<temp<<" e:"<<e<<endl;
-            for(int k=0;k<v.size();k++)
-            {
-                cout<<v[k]<<" ";
-            }
-            cout<<endl;*/
             e-=temp;
             r=mul(r,v[i]);
             i++;
-            //cout<<"r="<<r<<" i="<<i<<endl;
             continue;
         }
         else maxE/=2;
